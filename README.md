@@ -28,5 +28,5 @@ inside your local `dist/` folder
 # Endpoint to access image processing 
 
 ```sh
-$ (http://localhost:3000/api/image?filename=encenadaport&height=3000&width=3000 )
+$ http://localhost:3000/api/image?filename=encenadaport&height=3000&width=3000
 ```
