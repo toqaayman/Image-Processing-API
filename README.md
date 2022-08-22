@@ -24,3 +24,9 @@ $ npm run build
 
 This task will create a distribution version of the project
 inside your local `dist/` folder
+
+# Endpoint to access image processing 
+
+```sh
+$ (http://localhost:3000/api/image?filename=encenadaport&height=3000&width=3000 )
+```
