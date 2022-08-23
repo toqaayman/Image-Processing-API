@@ -12,10 +12,12 @@ const existsSync = (path: string) => {
 }
 
 const NumberOrString = (height: number, width: number) => {
-  if (!isNaN(height) || !isNaN(width)) {
-    return true
+  if (isNaN(height)) {
+    return false;
+  } else if (isNaN(width)) {
+    return false;
   } else {
-    return false
+    return true;
   }
 }
 

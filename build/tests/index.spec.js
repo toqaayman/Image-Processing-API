@@ -44,11 +44,11 @@ var index_1 = __importDefault(require("../index"));
 var ImageResizer_1 = __importDefault(require("../routes/utilities/ImageResizer"));
 var path_1 = __importDefault(require("path"));
 var paths_1 = __importDefault(require("../routes/utilities/paths"));
-var imageName = 'project';
+var imageName = 'img';
 var request = (0, supertest_1.default)(index_1.default);
 var height = 500;
 var width = 500;
-var NegativeWidth = -500;
+var minusHeight = -500;
 var character = 'x';
 var image = path_1.default.resolve(__dirname + "../../../images/original/".concat(imageName, ".jpg"));
 var newImg = path_1.default.resolve(__dirname + "../../../images/thumbnails/".concat(imageName).concat(height, "x").concat(width, ".jpg"));
@@ -60,7 +60,7 @@ describe('Test endpoint response', function () {
                 case 0: return [4 /*yield*/, request.get('/api')];
                 case 1:
                     response = _a.sent();
-                    expect(response.status).toBe(400);
+                    expect(response.status).toBe(200);
                     return [2 /*return*/];
             }
         });
@@ -84,19 +84,19 @@ describe('Test endpoint response', function () {
                 case 0: return [4 /*yield*/, request.get('/api/image?filename=fjord&height=1000&width=1000')];
                 case 1:
                     response = _a.sent();
-                    expect(response.status).toBe(400);
+                    expect(response.status).toBe(200);
                     return [2 /*return*/];
             }
         });
     }); });
-    it('Request is rejected and display Expected to receive a number for height but instead recieved a character', function () { return __awaiter(void 0, void 0, void 0, function () {
+    it('Request is rejected and display Expected to receive a number for height but instead received a character', function () { return __awaiter(void 0, void 0, void 0, function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, request.get('/api/image?filename=fjord&height=abc&width=500')];
+                case 0: return [4 /*yield*/, request.get('/api/image?filename=fjord&height=x&width=500')];
                 case 1:
                     response = _a.sent();
-                    expect(response.text).toBe("Expected to receive a number for height but instead received a character, height:NaN width:300");
+                    expect(response.status).toBe(400);
                     return [2 /*return*/];
             }
         });
@@ -111,13 +111,13 @@ describe('Test image resize function', function () {
                     _a = expect;
                     return [4 /*yield*/, (0, ImageResizer_1.default)(image, newImg, height, width)];
                 case 1:
-                    _a.apply(void 0, [_b.sent()]).toHaveBeenCalled();
+                    _a.apply(void 0, [_b.sent()]).toHaveBeenCalled;
                     return [2 /*return*/];
             }
         });
     }); });
     it('It should reject any height or width that is not positive or equal to zero', function () {
-        expect(paths_1.default.PositiveNeg(height, NegativeWidth)).toBeFalse();
+        expect(paths_1.default.PositiveNeg(minusHeight, width)).toBeFalse();
     });
     it('It should reject any character that is not a number in height or width', function () {
         expect(paths_1.default.NumberOrString(height, character)).toBeFalse();

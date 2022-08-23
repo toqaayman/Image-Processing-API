@@ -51,11 +51,14 @@ var existsSync = function (path) {
     }
 };
 var NumberOrString = function (height, width) {
-    if (!isNaN(height) || !isNaN(width)) {
-        return true;
+    if (isNaN(height)) {
+        return false;
+    }
+    else if (isNaN(width)) {
+        return false;
     }
     else {
-        return false;
+        return true;
     }
 };
 var PositiveNeg = function (height, width) {
